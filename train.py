@@ -21,7 +21,7 @@ if __name__ == "__main__":
     parser.add_argument('--time_stamp', default="",
                         help="The time stamp that helps identify different trails.")
     parser.add_argument('--dataset', default="CIFAR10",
-                        choices=["CIFAR10", "CIFAR100", "TINY_IMAGENET", "IMAGENET", "SVHN", "GTSRB"])
+                        choices=["MNIST", "CIFAR10", "CIFAR100", "TINY_IMAGENET", "IMAGENET", "SVHN", "GTSRB"])
     parser.add_argument('--dataset_val_ratio', default=0.1, type=float)
     parser.add_argument('--mode', default='fast_bat', type=str,
                         choices=["fast_at", "fast_bat", "fast_at_ga", "pgd"],
@@ -139,6 +139,10 @@ if __name__ == "__main__":
     logger = logging.getLogger("CIFAR10 BAT Training")
 
     ########################## dataset and model ##########################
+    if args.dataset == "MNIST":
+        train_dl, val_dl, test_dl, norm_layer, num_classes = mnist_dataloader(data_dir=args.data_dir,
+                                                                              batch_size=args.batch_size,
+                                                                              val_ratio=args=dataset_val_ratio)
     if args.dataset == "CIFAR10":
         train_dl, val_dl, test_dl, norm_layer, num_classes = cifar10_dataloader(data_dir=args.data_dir,
                                                                                 batch_size=args.batch_size,
